@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manager Portal - Sales Report</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #e9ecef;
+            font-family: 'Arial', sans-serif;
+        }
+
+
+
+        h2 {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .report-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            max-width: 800px;
+        }
+
+        .report-header {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .report-header h3 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .report-content {
+            padding: 20px;
+        }
+
+        .select-container {
+            margin-bottom: 20px;
+        }
+
+        select {
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        .sales-data {
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .total-sales {
+            font-weight: bold;
+            margin-top: 10px;
+            text-align: right;
+        }
+        .header {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 0;
+            margin-bottom: 30px;
+        }
+        .header h2 {
+            margin: 0;
+            padding: 0 20px;
+        }
+        .user-form {
+            margin-bottom: 40px;
+        }
+        .form-control, .btn-primary {
+            border-radius: 0; /* Flat design for inputs and button */
+        }
+        .navbar-custom {
+            background-color: #747679;
+            padding: 10px 0;
+        }
+        .navbar-custom .navbar-brand {
+            color: rgb(4, 0, 255);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container">
+            <a class="navbar-brand" href="#">The Draft Room Manager Portal</a>
+            <div class="navbar-nav ml-auto">
+                <a class="btn btn-danger" href="/logout" role="button">Logout</a>
+                <a href="/user-links" class="btn btn-primary">Back to Home</a>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="report-container">
+        <div class="report-header">
+            <h3>Select a Day</h3>
+        </div>
+        <div class="report-content">
+            <div class="select-container">
+                <select id="day-select">
+                    <option value="2023-12-01">December 01, 2023</option>
+                    <option value="2023-12-02">December 02, 2023</option>
+                    <!-- Add more options as needed -->
+                </select>
+            </div>
+
+            <div class="sales-data">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Transaction ID</th>
+                            <th>Amount</th>
+                            <th>Payment Method</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Populate with sales data for the selected day -->
+                        <tr>
+                            <td>1</td>
+                            <td>$50.00</td>
+                            <td>Credit Card</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>$30.00</td>
+                            <td>Cash</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="total-sales">
+                Total Sales: $80.00
+            </div>
+
+
+        </div>
+    </div>
+
+</body>
+</html>

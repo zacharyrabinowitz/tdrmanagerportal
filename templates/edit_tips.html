@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Tips</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            background-color: #f7f9fc;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .navbar-custom {
+            background-color: #343a40;
+            padding: 10px 0;
+        }
+        .navbar-custom .navbar-brand, .navbar-custom .navbar-nav .nav-link {
+            color: #ffffff;
+        }
+        .container {
+            padding-top: 40px;
+        }
+        .form-box {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        .form-box h2 {
+            color: #343a40;
+        }
+        .btn-custom {
+            background-color: #17a2b8;
+            color: white;
+        }
+        .btn-custom:hover {
+            background-color: #138496;
+        }
+        .form-control:focus {
+            box-shadow: 0 0 5px rgba(23, 162, 184, 0.5);
+            border-color: #17a2b8;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            background-color: #343a40;
+            color: white;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container">
+            <a class="navbar-brand" href="#"><i class="fas fa-edit"></i> The Draft Room Manager Portal: Edit Tips</a>
+            <div class="navbar-nav ml-auto">
+                <a href="{{ url_for('login') }}" class="btn btn-danger nav-link"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+                <a href="{{ url_for('user_links') }}" class="btn btn-primary nav-link"><i class="fas fa-home"></i> Back to Home</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="form-box">
+            <h2>Edit Tips for {{ selected_date }}</h2>
+            <form method="POST" action="{{ url_for('edit_tips', date=selected_date) }}">
+                <div class="form-group">
+                    <label for="totalCashTips">Total Cash Tips:</label>
+                    <input type="number" step="0.01" class="form-control" id="totalCashTips" name="totalCashTips" value="{{ total_cash_tips }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="totalCreditCardTips">Total Credit Card Tips:</label>
+                    <input type="number" step="0.01" class="form-control" id="totalCreditCardTips" name="totalCreditCardTips" value="{{ total_credit_card_tips }}" required>
+                </div>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Hours Worked</th>
+                            <th>Food Expense</th>
+                            <th>Cash Tips</th>
+                            <th>Credit Card Tips</th>
+                            <th>Total Tips</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for tip in tips %}
+                        <tr>
+                            <td><input type="text" class="form-control" name="name_{{ tip.id }}" value="{{ tip.name }}" required></td>
+                            <td><input type="number" class="form-control" name="hours_worked_{{ tip.id }}" value="{{ tip.hours_worked }}" step="0.01" required></td>
+                            <td><input type="number" class="form-control" name="food_expense_{{ tip.id }}" value="{{ tip.food_expense }}" step="0.01" required></td>
+                            <td><input type="number" class="form-control cash-tips" name="cash_tips_{{ tip.id }}" value="{{ tip.cash_tips }}" step="0.01" readonly></td>
+                            <td><input type="number" class="form-control credit-card-tips" name="credit_card_tips_{{ tip.id }}" value="{{ tip.credit_card_tips }}" step="0.01" readonly></td>
+                            <td><input type="number" class="form-control total-tips" name="total_tips_{{ tip.id }}" value="{{ tip.total_tips }}" step="0.01" readonly></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2024 The Draft Room. All rights reserved.</p>
+        <p> Developed by &copy;Rabinowitz Capital</p>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cashTipsInput = document.getElementById('totalCashTips');
+            const creditCardTipsInput = document.getElementById('totalCreditCardTips');
+
+            const formElements = document.querySelectorAll('input[name^="hours_worked_"], input[name^="food_expense_"]');
+
+            formElements.forEach(element => {
+                element.addEventListener('input', updateTips);
+            });
+
+            cashTipsInput.addEventListener('input', updateTips);
+            creditCardTipsInput.addEventListener('input', updateTips);
+
+            function updateTips() {
+                const totalCashTips = parseFloat(cashTipsInput.value) || 0;
+                const totalCreditCardTips = parseFloat(creditCardTipsInput.value) || 0;
+                let totalHoursWorked = 0;
+
+                document.querySelectorAll('input[name^="hours_worked_"]').forEach(input => {
+                    totalHoursWorked += parseFloat(input.value) || 0;
+                });
+
+                document.querySelectorAll('tr').forEach(row => {
+                    const hoursWorked = parseFloat(row.querySelector('input[name^="hours_worked_"]').value) || 0;
+                    const proportion = hoursWorked / totalHoursWorked;
+                    const foodExpense = parseFloat(row.querySelector('input[name^="food_expense_"]').value) || 0;
+
+                    const cashTips = (totalCashTips * proportion) - foodExpense;
+                    const creditCardTips = totalCreditCardTips * proportion;
+                    const totalTips = Math.max(cashTips + creditCardTips, 0);
+
+                    row.querySelector('.cash-tips').value = cashTips.toFixed(2);
+                    row.querySelector('.credit-card-tips').value = creditCardTips.toFixed(2);
+                    row.querySelector('.total-tips').value = totalTips.toFixed(2);
+                });
+            }
+
+            updateTips();
+        });
+    </script>
+</body>
+</html>

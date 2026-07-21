@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Draft Room Manager Portal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            background-image: url('c:\Users\Zachary Rabinowitz\Downloads\Feel the Pleasure.png'); /* Change the path to your image */
+            background-size: cover; /* Ensure the background covers the entire page */
+            background-repeat: no-repeat; /* Prevent the background from repeating */
+            background-position: center; /* Center the background image */
+        }
+        body {
+            background-color: #e9ecef;
+            font-family: 'Arial', sans-serif;
+        }
+        .navbar-custom {
+            background-color: #747679;
+            padding: 10px 0;
+        }
+        .navbar-custom .navbar-brand {
+            color: rgb(4, 0, 255);
+        }
+        .greeting {
+            text-align: center;
+            margin: 10px 0;
+            color: #333;
+        }
+        .link-box {
+            background-color: #4CAF50;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.6s ease;
+            margin: 10px;
+}
+        .link-box {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .link-box:hover {
+            transform: rotate(20deg);
+            box-shadow: 0 6px 120px rgba(255, 255, 255, 0.15);
+        }
+        .dashboard-link {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .dashboard-row {
+            margin-bottom: 30px; /* Adds more space between rows */
+        }
+        .btn-danger, .btn-primary {
+            margin-left: 10px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            color: rgb(0, 0, 0);
+            border-radius: 10px;
+        }
+        body {
+            background-color: #f7f9fc;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .navbar-custom {
+            background-color: #343a40;
+            padding: 10px 0;
+        }
+        .navbar-custom .navbar-brand, .navbar-custom .navbar-nav .nav-link {
+            color: #ffffff;
+        }
+        .container {
+            padding-top: 5px;
+        }
+        .form-box, .table-responsive {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        .form-box h2, .table-responsive h2 {
+            color: #343a40;
+        }
+        .add-beer-form input, .add-beer-form button {
+            margin-bottom: 15px;
+        }
+        .btn-custom {
+            background-color: #17a2b8;
+            color: white;
+        }
+        .btn-custom:hover {
+            background-color: #138496;
+        }
+        .table thead th {
+            background-color: #343a40;
+            color: #ffffff;
+        }
+        .form-control:focus {
+            box-shadow: 0 0 5px rgba(23, 162, 184, 0.5);
+            border-color: #17a2b8;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container">
+            <a class="navbar-brand" href="#">The Draft Room Manager Portal</a>
+            <div class="navbar-nav ml-auto">
+                <a class="navbar-brand" href="#">Logged In: {{first_name}} {{last_name}}</a>
+                <a class="btn btn-danger" href="/logout" role="button"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+    </nav>
+</div>
+    <div class="container">
+        <div class="greeting">
+            <h2>Welcome to The Draft Room Manager Portal</h2>
+            <h4>Logged In: {{first_name}}</h4>
+        </div>
+        
+
+        <div class="row dashboard-row">
+            <div class="col-md-3">
+                <a href="/manage-users" class="link-box dashboard-link">
+                    <i class="fas fa-users-cog"></i> Manage Users
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="https://172.100.18.162/securitycenter/#/monitoring" class="link-box dashboard-link">
+                    <i class="fas fa-video"></i> View Cameras
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="https://www.toasttab.com/restaurants/admin/home" class="link-box dashboard-link">
+                    <i class="fas fa-concierge-bell"></i> Toast Admin
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="https://172.100.18.162/securitycenter/#/accessconfiguration/cardholders" class="link-box dashboard-link">
+                    <i class="fas fa-id-card"></i> Manage Credentials
+                </a>
+            </div>
+        </div>
+
+        <div class="row dashboard-row">
+            <div class="col-md-3">
+                <a href="https://www.toasttab.com/ransom-room-79-perry-street/findcard" class="link-box dashboard-link">
+                    <i class="fas fa-gift"></i> Gift Card Lookup
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="/beer-list" class="link-box dashboard-link">
+                    <i class="fas fa-beer"></i> Beer Keg Inventory
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="/tips" class="link-box dashboard-link">
+                    <i class="fas fa-dollar-sign"></i> Manage Tips
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="/inventory" class="link-box dashboard-link">
+                    <i class="fas fa-boxes"></i> Inventory
+                </a>
+            </div>
+        </div>
+
+        <div class="row dashboard-row">
+            <div class="col-md-3">
+                <a href="/purchasing_requests" class="link-box dashboard-link">
+                    <i class="fas fa-pencil-alt"></i> Write Up
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="/invoice_maker" class="link-box dashboard-link">
+                    <i class="fas fa-file-invoice"></i> Invoice Generator
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="/members" class="link-box dashboard-link">
+                    <i class="fas fa-users"></i> Member Management
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="https://calendar.google.com/calendar/u/0/r" class="link-box dashboard-link">
+                    <i class="fas fa-calendar-alt"></i> Calendar
+                </a>
+            </div>
+        </div>
+
+        <div class="row dashboard-row">
+            <div class="col-md-3">
+                <a href="https://manage.wix.com/dashboard/5dabafa4-0c39-497a-95e6-716c8f9b6946/home?referralInfo=sidebar" class="link-box dashboard-link">
+                    <i class="fas fa-tools"></i> Website Admin
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="/dashboard" class="link-box dashboard-link">
+                    <i class="fas fa-chart-line"></i> Live Stats
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="https://tables.toasttab.com/restaurants/b7d22757-8c83-4c88-a12b-1dd260b1f296/joinWaitlist" class="link-box dashboard-link">
+                    <i class="fas fa-list-alt"></i> Waitlist
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="https://www.canva.com/design/DAFw_spnvZU/WeRqYemkchugauFdaoL1OA/edit" class="link-box dashboard-link">
+                    <i class="fas fa-edit"></i> Menu Editor
+                </a>
+            </div>
+        </div>
+
+        <div class="row dashboard-row">
+            <div class="col-md-3">
+                <a href="https://www.toasttab.com/restaurants/admin/checksearch?utm_content=category_page" class="link-box dashboard-link">
+                    <i class="fas fa-search"></i> Check Lookup
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="/" class="link-box dashboard-link">
+                    <i class="fas "></i> Unknown
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="https://tables.toasttab.com/restaurants/b7d22757-8c83-4c88-a12b-1dd260b1f296/joinWaitlist" class="link-box dashboard-link">
+                    <i class="fas "></i> Unknown
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="https://www.canva.com/design/DAFw_spnvZU/WeRqYemkchugauFdaoL1OA/edit" class="link-box dashboard-link">
+                    <i class="fas "></i> Unknown
+                </a>
+            </div>
+        </div>
+    </div>
+    
+      <div class="footer">
+        <p>&copy; 2024 The Draft Room Manager Portal. All rights reserved.</p>
+        <p> Developed by &copy;Rabinowitz Capital</p>
+      </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

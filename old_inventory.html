@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Management</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        /* Header Styles */
+        .header {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 0;
+            margin-bottom: 30px;
+        }
+        .header h2 {
+            margin: 0;
+            padding: 0 20px;
+        }
+
+        /* Form Styles */
+        .item-form {
+            margin-bottom: 40px;
+        }
+        .form-control, .btn-primary {
+            border-radius: 0; /* Flat design for inputs and button */
+        }
+
+        /* Navbar Styles */
+        .navbar-custom {
+            background-color: #747679;
+            padding: 10px 0;
+        }
+        .navbar-custom .navbar-brand {
+            color: rgb(4, 0, 255);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container">
+            <a class="navbar-brand" href="#">Inventory Management System</a>
+            <div class="navbar-nav ml-auto">
+                <a class="btn btn-danger" href="/logout" role="button">Logout</a>
+                <a href="/user-links" class="btn btn-primary">Back to Dashboard</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Add/Edit Item Form -->
+        <div class="item-form">
+            <h3>Add/Edit Item</h3>
+            <form method="POST" action="/manage-inventory">
+                <div class="form-group">
+                    <label for="item_name">Item Name:</label>
+                    <input type="text" class="form-control" id="item_name" name="item_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="price">Price:</label>
+                    <input type="text" class="form-control" id="price" name="price" required>
+                </div>
+                <div class="form-group">
+                    <label for="cost">Cost:</label>
+                    <input type="text" class="form-control" id="cost" name="cost" required>
+                </div>
+                <div class="form-group">
+                    <label for="origin">Origin:</label>
+                    <input type="text" class="form-control" id="origin" name="origin" required>
+                </div>
+                <div class="form-group">
+                    <label for="last_ordered">Last Ordered:</label>
+                    <input type="date" class="form-control" id="last_ordered" name="last_ordered" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+
+        <!-- Item List Section -->
+        <div class="item-list">
+            <h3>Item List</h3>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Item Name</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Cost</th>
+                        <th scope="col">Origin</th>
+                        <th scope="col">Last Ordered</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                        <tr>
+                            <td>{{ item['item_name'] }}</td>
+                            <td>{{ item['price'] }}</td>
+                            <td>{{ item['cost'] }}</td>
+                            <td>{{ item['origin'] }}</td>
+                            <td>{{ item['last_ordered'] }}</td>
+                            <td>
+                                <a href="{{ url_for('edit_item', item_id=item['id']) }}" class="btn btn-sm btn-primary">Edit</a>
+                                <a href="/delete-item/{{ item['id'] }}" class="btn btn-sm btn-danger">Delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

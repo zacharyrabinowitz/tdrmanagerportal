@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Maker</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            background-image: url('c:/Users/Zachary Rabinowitz/Downloads/Feel the Pleasure.png'); /* Update the path to your image */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            font-family: 'Arial', sans-serif;
+        }
+        .navbar-custom {
+            background-color: #343a40;
+            padding: 10px 0;
+        }
+        .navbar-custom .navbar-brand, .navbar-custom .nav-link {
+            color: #ffffff;
+        }
+        .container {
+            padding-top: 40px;
+        }
+        .form-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .form-control {
+            border-radius: 20px;
+            margin-bottom: 20px;
+        }
+        .btn-submit {
+            background: #007bff;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 20px;
+            color: white;
+            width: 100%;
+            cursor: pointer;
+        }
+        .btn-submit:hover {
+            background: #0056b3;
+        }
+        .btn-cancel {
+            background: #dc3545;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 20px;
+            color: white;
+            width: 100%;
+            cursor: pointer;
+        }
+        .btn-cancel:hover {
+            background: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container">
+            <a class="navbar-brand" href="#"><i class="fas fa-file-invoice"></i> The Draft Room Manager Portal: Invoice Generator</a>
+            <div class="navbar-nav ml-auto">
+                <a class="btn btn-danger nav-link" href="/logout" role="button"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                <a href="/user-links" class="btn btn-primary nav-link"><i class="fas fa-home"></i> Back to Home</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <div class="form-container">
+            <h2 class="text-center"><i class="fas fa-file-alt"></i> Create Invoice</h2>
+            <form action="{{ url_for('submit_invoice') }}" method="POST">
+                <div class="form-group">
+                    <label for="member_id"><i class="fas fa-id-badge"></i> Member:</label>
+                    <input type="text" class="form-control" id="member_id" name="member_id" required>
+                </div>
+                <div class="form-group">
+                    <label for="date"><i class="fas fa-calendar-alt"></i> Date:</label>
+                    <input type="date" class="form-control" id="date" name="date" required>
+                </div>
+                <div class="form-group">
+                    <label for="description"><i class="fas fa-info-circle"></i> Description:</label>
+                    <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="amount"><i class="fas fa-dollar-sign"></i> Amount:</label>
+                    <input type="number" class="form-control" id="amount" name="amount" required>
+                </div>
+                <button type="submit" class="btn btn-submit"><i class="fas fa-check"></i> Submit</button>
+                <a href="{{ url_for('user_links') }}" class="btn btn-cancel"><i class="fas fa-times"></i> Cancel</a>
+            </form>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

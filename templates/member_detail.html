@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Member Details</title>
+</head>
+<body>
+    <h1>Member Details: {{ member.name }}</h1>
+    <p>Membership Level: {{ member.membership_level }}</p>
+    <p>Phone Number: {{ member.phone }}</p>
+    <p>Email: {{ member.email }}</p>
+    <h2>Past Invoices</h2>
+    <ul>
+        {% for invoice in member.invoices.past %}
+            <li>{{ invoice }}</li>
+        {% endfor %}
+    </ul>
+    <h2>Current Invoices</h2>
+    <ul>
+        {% for invoice in member.invoices.current %}
+            <li>{{ invoice }}</li>
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for('home') }}">Back to Member List</a>
+</body>
+</html>

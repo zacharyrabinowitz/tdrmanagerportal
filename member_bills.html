@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Member Bills</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .header {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 0;
+            margin-bottom: 30px;
+        }
+        .header h2 {
+            margin: 0;
+            padding: 0 20px;
+        }
+        .user-form {
+            margin-bottom: 40px;
+        }
+        .form-control, .btn-primary {
+            border-radius: 0; /* Flat design for inputs and button */
+        }
+        .navbar-custom {
+            background-color: #747679;
+            padding: 10px 0;
+        }
+        .navbar-custom .navbar-brand {
+            color: rgb(4, 0, 255);
+        }
+        .member-list {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container">
+            <a class="navbar-brand" href="#">The Draft Room Manager Portal</a>
+            <div class="navbar-nav ml-auto">
+                <a class="btn btn-danger" href="/logout" role="button">Logout</a>
+                <a href="/user-links" class="btn btn-primary">Back to Home</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="header">
+            <h2>Member Bills</h2>
+        </div>
+        <div class="user-form">
+            <h3>Add Member</h3>
+            <form method="POST" action="/add_member">
+                <div class="form-group">
+                    <label for="member_name">Member Name:</label>
+                    <input type="text" class="form-control" id="member_name" name="member_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="bill_amount">Bill Amount:</label>
+                    <input type="number" class="form-control" id="bill_amount" name="bill_amount" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Member</button>
+            </form>
+        </div>
+        <div class="member-list">
+            <h3>Member List</h3>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Member Name</th>
+                        <th scope="col">Bill Amount</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for member in members %}
+                    <tr>
+                        <td>{{ member['name'] }}</td>
+                        <td>{{ member['bill_amount'] }}</td>
+                        <td>
+                            <a href="/edit_member/{{ member['id'] }}" class="btn btn-primary">Edit</a>
+                            <a href="/delete_member/{{ member['id'] }}" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

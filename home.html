@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .link-box {
+            display: block;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-align: center;
+            background-color: #f9f9f9;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            text-decoration: none;
+            color: black;
+        }
+
+        .link-box:hover {
+            background-color: #f0f0f0;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container my-4">
+        <h2 class="text-center mb-4">Welcome to the Home Page</h2>
+        <div class="row">
+            <!-- Manage Users Link (only for admin) -->
+            {% if role == 'admin' %}
+                <div class="col-md-6 mb-3">
+                    <a href="/manage-users" class="link-box">
+                        <h3>Manage Users</h3>
+                    </a>
+                </div>
+            {% endif %}
+
+            <!-- Other Links -->
+            {% for link in links %}
+                <div class="col-md-6 mb-3">
+                    <a href="{{ link.url }}" class="link-box">
+                        <h3>{{ link.title }}</h3>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

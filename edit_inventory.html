@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Inventory Item</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            background-color: #f7f9fc;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .form-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+        .form-control {
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        .btn-save {
+            background: #007bff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            color: white;
+            width: 100%;
+            cursor: pointer;
+        }
+        .btn-cancel {
+            background: #dc3545;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            color: white;
+            width: 100%;
+            cursor: pointer;
+        }
+        .btn-save:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2 class="text-center">Edit Inventory Item</h2>
+        <form action="{{ url_for('edit_inventory', item_id=item.id) }}" method="post">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" id="name" name="name" value="{{ item.name }}" required>
+            </div>
+            <div class="form-group">
+                <label for="origin">Origin:</label>
+                <input type="text" class="form-control" id="origin" name="origin" value="{{ item.origin }}" required>
+            </div>
+            <div class="form-group">
+                <label for="cost">Cost:</label>
+                <input type="number" step="0.01" class="form-control" id="cost" name="cost" value="{{ item.cost }}" required>
+            </div>
+            <div class="form-group">
+                <label for="last_purchased">Last Purchased:</label>
+                <input type="date" class="form-control" id="last_purchased" name="last_purchased" value="{{ item.last_purchased.strftime('%Y-%m-%d') }}" required>
+            </div>
+            <div class="form-group">
+                <label for="stock">Stock:</label>
+                <input type="number" class="form-control" id="stock" name="stock" value="{{ item.stock }}" required>
+            </div>
+            <div class="form-group">
+                <label for="category">Category:</label>
+                <select class="form-control" id="category" name="category" required>
+                    <option value="Beer" {% if item.category == 'Beer' %}selected{% endif %}>Beer</option>
+                    <option value="Liquor" {% if item.category == 'Liquor' %}selected{% endif %}>Liquor</option>
+                    <option value="Food" {% if item.category == 'Food' %}selected{% endif %}>Food</option>
+                    <option value="Etc" {% if item.category == 'Etc' %}selected{% endif %}>Etc</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-save"><i class="fas fa-save"></i> Save Changes</button>
+            <a href="{{ url_for('manage_inventory') }}" class="btn btn-cancel"><i class="fas fa-times"></i> Cancel</a>
+        </form>
+    </div>
+</body>
+</html>

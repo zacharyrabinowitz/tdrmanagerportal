@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Layout</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .table {
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            border: 1px solid #000;
+            text-align: center;
+            line-height: 60px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+        .table.delete {
+            background-color: #ff4d4d;
+            color: #fff;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Edit Layout</h1>
+        <div id="layout" class="mb-4">
+            <div class="row">
+                {% for table in tables %}
+                <div class="col-md-2 mb-3">
+                    <div class="table" data-table-id="{{ table.id }}">
+                        {{ table.section }}-{{ table.table_number }}
+                        <a href="/delete_table/{{ table.id }}" class="btn btn-sm btn-danger mt-2">Delete</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <form method="POST" action="/add_table" class="mt-5">
+            <h2>Add a New Table</h2>
+            <div class="form-group">
+                <label for="section">Section:</label>
+                <input type="text" class="form-control" id="section" name="section" required>
+            </div>
+            <div class="form-group">
+                <label for="table_number">Table Number:</label>
+                <input type="number" class="form-control" id="table_number" name="table_number" required>
+            </div>
+            <div class="form-group">
+                <label for="seats">Number of Seats:</label>
+                <input type="number" class="form-control" id="seats" name="seats" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Table</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Layout</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .table {
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            border: 1px solid #000;
+            text-align: center;
+            line-height: 60px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+        .table.reserved {
+            background-color: #ff4d4d;
+            color: #fff;
+        }
+        .table.available {
+            background-color: #4dff88;
+        }
+        .table.selected {
+            border: 2px solid #000;
+            background-color: #ffa500;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Restaurant Layout</h1>
+        <div id="layout" class="mb-4">
+            <div class="row">
+                {% for table in tables %}
+                <div class="col-md-2 mb-3">
+                    <div class="table {% if table.id in reserved_tables %}reserved{% else %}available{% endif %}" 
+                         data-table-id="{{ table.id }}">
+                        {{ table.section }}-{{ table.table_number }}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <form id="reservationForm" method="POST" action="/reserve" class="mt-5">
+            <h2>Make a Reservation</h2>
+            <div class="form-group">
+                <label for="customerName">Customer Name:</label>
+                <input type="text" class="form-control" id="customerName" name="customer_name" required>
+            </div>
+            <div class="form-group">
+                <label for="reservationTime">Reservation Time:</label>
+                <input type="datetime-local" class="form-control" id="reservationTime" name="reservation_time" required>
+            </div>
+            <input type="hidden" id="tableId" name="table_id">
+            <button type="submit" class="btn btn-primary">Reserve</button>
+        </form>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const tables = document.querySelectorAll('.table.available');
+            tables.forEach(table => {
+                table.addEventListener('click', function () {
+                    tables.forEach(t => t.classList.remove('selected'));
+                    this.classList.add('selected');
+                    const tableId = this.getAttribute('data-table-id');
+                    document.getElementById('tableId').value = tableId;
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Users</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            background-image: url('c:/Users/Zachary Rabinowitz/Downloads/Feel the Pleasure.png'); /* Update the path to your image */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            font-family: 'Arial', sans-serif;
+        }
+        .navbar-custom {
+            background-color: #343a40;
+            padding: 10px 0;
+        }
+        .navbar-custom .navbar-brand, .navbar-custom .nav-link {
+            color: #ffffff;
+        }
+        .container {
+            padding-top: 40px;
+        }
+        .user-form, .user-list {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .form-control, .btn-primary {
+            border-radius: 0;
+        }
+        .btn-primary, .btn-danger {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container">
+            <a class="navbar-brand" href="#"><i class="fas fa-user-cog"></i> The Draft Room Manager Portal: Access Control</a>
+            <div class="navbar-nav ml-auto">
+                <a class="btn btn-danger" href="/logout" role="button"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                <a href="/user-links" class="btn btn-primary"><i class="fas fa-home"></i> Back to Home</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Add/Edit User Form -->
+        <div class="user-form">
+            <h3><i class="fas fa-user-plus"></i> Add User</h3>
+            <form method="POST" action="/manage-users">
+                <div class="form-group">
+                    <label for="username"><i class="fas fa-user"></i> Username:</label>
+                    <input type="text" class="form-control" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password"><i class="fas fa-lock"></i> Password:</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="first_name"><i class="fas fa-id-badge"></i> Name:</label>
+                    <input type="text" class="form-control" id="first_name" name="first_name" required>
+                </div>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> Submit</button>
+            </form>
+        </div>
+
+        <!-- User List Section -->
+        <div class="user-list">
+            <h3><i class="fas fa-users"></i> User List</h3>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col"><i class="fas fa-user"></i> Username</th>
+                        <th scope="col"><i class="fas fa-id-badge"></i> Name</th>
+                        <th scope="col"><i class="fas fa-check-circle"></i> Active</th>
+                        <th scope="col"><i class="fas fa-cogs"></i> Manager Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                        {% if user.username != 'admin' %}
+                            <tr>
+                                <td>{{ user['username'] }}</td>
+                                <td>{{ user['first_name'] }}</td>
+                                <td>{{ 'Yes' if user['is_active'] else 'No' }}</td>
+                                <td>
+                                    <a href="/toggle-user/{{ user['username'] }}" class="btn btn-sm {{ 'btn-success' if not user['is_active'] else 'btn-warning' }}">
+                                        <i class="fas {{ 'fa-toggle-on' if user['is_active'] else 'fa-toggle-off' }}"></i> {{ 'Activate' if not user['is_active'] else 'Deactivate' }}
+                                    </a>
+
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">  
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>The Draft Room Tip Calculator</title>
+
+    <!-- Fonts and Styles -->
+    <link href="all.min.css" rel="stylesheet">
+    <link href="sb-admin-2.min.css" rel="stylesheet">
+
+<style>
+    /* Increase the container width */
+    .container {
+        max-width: 1400px; /* Adjust this value as desired */
+    }
+
+    .footer {
+        background-color: #dee2e6;
+        color: #000000;
+        padding: 20px 0;
+        margin-top: 20px; /* Adds spacing between content and footer */
+        width: 100%;
+        min-height: 150px; /* Extend the footer vertically */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .footer a {
+        color: #086cd0;
+        text-decoration: none;
+    }
+
+    .footer a:hover {
+        text-decoration: underline;
+    }
+
+    .header {
+        background-color: #dee2e6;
+        color: #000000;
+        padding: 10px 0;
+        width: 100%;
+        position: relative;
+        text-align: center;
+        min-height: 100px; /* Extend the header vertically */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .main_part{
+        background-color:white;
+    }
+
+    html{
+        background-color:#dee2e6;
+    }
+</style>
+
+</head>
+<body>
+    <div class="header">
+        <h1 class="mb-0" style="font-family: 'Trebuchet MS', sans-serif;">The Draft Room Tip Calculator</h1>
+    </div>
+    <div class="main_part">
+        <div class="container my-4">
+
+            <!-- Input Cards -->
+            <div class="row justify-content-center">
+                <!-- Select Date Card -->
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow">
+                        <div class="card-body d-flex align-items-center">
+                            <div>
+                                <label class="text-primary font-weight-bold">Select Date:</label>
+                                <input type="date" id="date-picker" class="form-control">
+                            </div>
+                            <div class="ml-auto">
+                                <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Total Cash Tips Card -->
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <label class="text-success font-weight-bold">Total Cash Tips:</label>
+                            <input type="number" id="cash" step="0.01" class="form-control" placeholder="0.00">
+                            <!-- Comparison display for Cash -->
+                            <small id="cashComparison" class="d-none">
+                                Original: <span id="cashOriginal" style="text-decoration: line-through;"></span> 
+                                <span id="cashReduced" style="color: red; font-weight: bold;"></span>
+                                (<span id="cashDifference"></span> kept by The Draft Room)
+                            </small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Total Credit Card Tips Card -->
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <label class="text-success font-weight-bold">Total Credit Card Tips:</label>
+                            <input type="number" id="card" step="0.01" class="form-control" placeholder="0.00">
+                            <!-- Comparison display for Credit Card -->
+                            <small id="cardComparison" class="d-none">
+                                Original: <span id="cardOriginal" style="text-decoration: line-through;"></span>
+                                <span id="cardReduced" style="color: red; font-weight: bold;"></span>
+                                (<span id="cardDifference"></span> kept by The Draft Room)
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Drag and Drop Excel Upload -->
+            <div class="mb-4">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h6 class="text-primary font-weight-bold">Upload Excel File</h6>
+                        <div id="drop-area" class="border border-primary p-4 text-center" style="cursor: pointer;">
+                            Drag and drop an Excel file here or click to select
+                            <input type="file" id="file-input" accept=".xlsx, .xls" style="display: none;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tip Allocation Table -->
+            <div class="card shadow mb-4">
+                <div class="card-body">
+                    <h6 class="text-primary font-weight-bold">Tip Allocation Table</h6>
+                    <div class="table-responsive">
+                        <table class="table table-bordered" >
+                            <thead>
+                                <tr>
+                                    <th>Employee</th>
+                                    <th>Job Title</th>
+                                    <th>Payable Hours</th>
+                                    <th>Cash Tips</th>
+                                    <th>Credit Card Tips</th>
+                                    <th>Total Tips</th>
+                                    <th>Initial Hourly Wage</th>
+                                    <th>Wage Adjustment</th>
+                                    <th>Adjusted Hourly Wage</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="d-flex justify-content-center mt-3">
+                        <!-- Add Person -->
+                        <button class="btn btn-primary mx-2">
+                            <i class="fas fa-user-plus"></i> Add Person
+                        </button>
+                        
+                        <!-- Distribute Tips -->
+                        <button class="btn btn-success mx-2">
+                            <i class="fas fa-money-bill-wave"></i> Distribute Tips
+                        </button>
+                        
+                        <!-- Clear Table -->
+                        <button class="btn btn-danger mx-2">
+                            <i class="fas fa-trash-alt"></i> Clear Table
+                        </button>
+                        
+                        <!-- Generate Report -->
+                        <button class="btn btn-info mx-2">
+                            <i class="fas fa-download"></i> Generate Report
+                        </button>
+                    </div>
+
+                    <!-- Deduct 3% Toggle -->
+                    <div class="mt-4 d-flex flex-column align-items-center">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="threePercentToggle">
+                            <label class="custom-control-label" for="threePercentToggle">Deduct 3%</label>
+                        </div>
+                        <p id="toggleStatus" class="mt-2">
+                            3% deduction is <strong>NOT</strong> applied.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br><br><br>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container text-center">
+            <p class="mb-1"><strong>The Draft Room</strong></p>
+            <p class="mb-1">79 Perry Street, Buffalo, NY 14203</p>
+            <p class="mb-1">Phone: <a href="tel:+17163140303">(716) 314-0303</a></p>
+            <p class="mb-1">Email: <a href="mailto:info@thedraftroombuffalo.com">info@thedraftroombuffalo.com</a></p>
+            <p class="mb-1">Website: <a href="http://thedraftroombuf.com/" target="_blank">thedraftroombuf.com</a></p>
+            <p class="mb-0">Facebook: <a href="https://www.facebook.com/TheDraftRoomBUF/" target="_blank">facebook.com/TheDraftRoomBUF/</a></p>
+            <br><br>
+        </div>
+    </footer>
+
+
+    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+
+
+</body>
+</html>

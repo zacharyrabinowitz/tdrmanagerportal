@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Clock</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Time Clock</h1>
+        <form method="POST">
+            <div class="form-group">
+                <button type="submit" name="action" value="clock_in" class="btn btn-success">Clock In</button>
+                <button type="submit" name="action" value="clock_out" class="btn btn-danger">Clock Out</button>
+            </div>
+        </form>
+        <h2>Your Time Punches</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Clock In</th>
+                    <th>Clock Out</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for punch in time_punches %}
+                <tr>
+                    <td>{{ punch.id }}</td>
+                    <td>{{ punch.clock_in }}</td>
+                    <td>{{ punch.clock_out or 'Still Clocked In' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

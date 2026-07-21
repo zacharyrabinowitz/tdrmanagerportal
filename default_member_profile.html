@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Member Profile</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f7f9fc;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .navbar-custom {
+            background-color: #343a40;
+            padding: 10px 0;
+        }
+        .navbar-custom .navbar-brand, .navbar-custom .navbar-nav .nav-link {
+            color: #ffffff;
+        }
+        .container {
+            padding-top: 10px;
+        }
+        .form-box, .table-responsive {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        .form-box h2, .table-responsive h2 {
+            color: #343a40;
+        }
+        .btn-custom {
+            background-color: #17a2b8;
+            color: white;
+        }
+        .btn-custom:hover {
+            background-color: #138496;
+        }
+        .table thead th {
+            background-color: #343a40;
+            color: #ffffff;
+        }
+        .form-control:focus {
+            box-shadow: 0 0 5px rgba(23, 162, 184, 0.5);
+            border-color: #17a2b8;
+        }
+        .footer {
+            text-align: center;
+            padding: 10px;
+            margin-top: 30px;
+            background-color: #343a40;
+            color: white;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container">
+            <a class="navbar-brand" href="#"><i class="fas fa-users"></i> The Draft Room Manager Portal: Member Management</a>
+            <div class="navbar-nav ml-auto">
+                <a class="btn btn-danger nav-link" href="/logout" role="button"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                <a href="/user-links" class="btn btn-primary nav-link"><i class="fas fa-home"></i> Back to Home</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-2">
+        <h2>Member Profile</h2>
+        <div class="card mb-2">
+            <div class="card-body">
+                <h5 class="card-title">Name: {{ member.first_name }} {{ member.last_name }}</h5>
+                <p class="card-text">Email: {{ member.email }}</p>
+                <p class="card-text">Membership Level: Single Membership {{ member.member_level }}</p>
+                <h5 class="card-title">Manager Actions:</h5>
+                <a href="{{ url_for('edit_member', member_id=member.id) }}" class="btn btn-sm btn-warning">Edit {{ member.first_name }} {{ member.last_name }}</a>
+                <form action="{{ url_for('delete_member', member_id=member.id) }}" method="post" style="display: inline-block;">
+                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete the member profile for {{ member.first_name }} {{ member.last_name }}? This action CANNOT be undone!');">Delete {{ member.first_name }} {{ member.last_name }}</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Invoice Upload Section -->
+        <div class="card mb-2">
+            <div class="card-body">
+                <h3>Upload Invoice</h3>
+                <form action="{{ url_for('upload_invoice', member_id=member.id) }}" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <input type="file" class="form-control-file" name="invoice_pdf" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Upload Invoice</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Invoice List Section -->
+        <div class="card mb-2">
+            <div class="card-body">
+                <h3>Invoices</h3>
+                <ul class="list-group">
+                    {% for invoice in invoices %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <a href="{{ url_for('view_invoice', invoice_id=invoice.id) }}" target="_blank">{{ invoice.uploaded_at.strftime('%Y-%m-%d %H:%M:%S') }}</a>
+                            <form action="{{ url_for('delete_invoice', invoice_id=invoice.id) }}" method="post" style="display:inline;">
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this invoice? This action CANNOT be undone!');">Delete Invoice</button>
+                            </form>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Order History Section -->
+        <div class="card mb-2">
+            <div class="card-body">
+                <h3>Order History</h3>
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in orders %}
+                            <tr>
+                                <td>{{ order.amount }}</td>
+                                <td>{{ order.date }}</td>
+                                <td>
+                                    <a href="{{ url_for('edit_order', member_id=member.id, order_id=order.id) }}" class="btn btn-warning">Edit Order</a>
+                                    <form action="{{ url_for('delete_order', member_id=member.id, order_id=order.id) }}" method="POST" style="display:inline;">
+                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this order? This action CANNOT be undone!');">Delete Order</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                    <h3 class="mt-2">Add an Order:</h3>
+                    <form action="{{ url_for('add_order', member_id=member.id) }}" method="POST">
+                        <div class="form-group">
+                            <input type="number" class="form-control" id="order_amount" name="amount" placeholder="Order Amount" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Order</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+                </table>
+            </div>
+        </div>
+
+        <!-- Notes Section -->
+        <div class="card mb-2">
+            <div class="card-body">
+                <h3>Notes</h3>
+                <form action="{{ url_for('add_note', member_id=member.id) }}" method="POST" class="mb-3">
+                    <div class="form-group">
+                        <textarea class="form-control" name="note_content" rows="3" placeholder="Add a note..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Note</button>
+                </form>
+                <ul class="list-group">
+                    {% for note in notes %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ note.content }}
+                            <form action="{{ url_for('delete_note', note_id=note.id) }}" method="post" style="display:inline;">
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this note? This action CANNOT be undone!');">Delete Note</button>
+                            </form>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

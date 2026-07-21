@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchasing Approval</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1rem 0;
+        }
+        main {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: #fff;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        input {
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #333;
+            color: #fff;
+            padding: 0.5rem;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #555;
+        }
+        footer {
+            text-align: center;
+            background-color: #333;
+            color: #fff;
+            padding: 0.5rem 0;
+        }
+        .navbar-custom {
+            background-color: #747679;
+            padding: 10px 0;
+        }
+        .navbar-custom .navbar-brand {
+            color: rgb(4, 0, 255);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Purchasing Approval</h1>
+    </header>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-custom">
+            <div class="container">
+                <a class="navbar-brand" href="#">The Draft Room Manager Portal</a>
+                <div class="navbar-nav ml-auto">
+                    <a class="navbar-brand" href="#"> Logged In: {{first_name}}</a>
+                    <a class="btn btn-danger" href="/logout" role="button">Logout</a>
+                    <a href="/user-links" class="btn btn-primary">Back to Home</a>
+                </div>
+            </div>
+        </nav>
+    <main>
+        <form method="POST">
+            <label for="item_name">Item Name:</label>
+            <input type="text" id="item_name" name="item_name" required>
+
+            <label for="need_for_item">Need for Item:</label>
+            <input type="text" id="need_for_item" name="need_for_item" required>
+
+            <label for="price">Price:</label>
+            <input type="number" id="price" name="price" required>
+
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" name="quantity" required>
+
+            <label for="requesting_manager">Requesting Manager:</label>
+            <input type="text" id="requesting_manager" name="requesting_manager" required>
+
+            <label for="approving_manager">Approving Manager:</label>
+            <input type="text" id="approving_manager" name="approving_manager" required>
+
+            <button type="submit">Submit Request</button>
+        </form>
+    </main>
+    <footer>
+        &copy; 2023 The Draft Room 
+    </footer>
+</body>
+</html>

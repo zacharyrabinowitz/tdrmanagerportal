@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Card Data</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin: 20px;
+        }
+        .upload-form {
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .pdf-data {
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Time Card Data</h1>
+        <div class="upload-form">
+            <h2>Upload a Time Card PDF</h2>
+            <form method="POST" enctype="multipart/form-data" action="/upload">
+                <input type="file" name="pdf_file" accept=".pdf" required>
+                <button type="submit">Upload</button>
+            </form>
+        </div>
+        <h2>PDF Data</h2>
+        <div class="pdf-data">
+            {% if pdf_data %}
+                {% for data in pdf_data %}
+                    <p>{{ data }}</p>
+                    <hr>
+                {% endfor %}
+            {% else %}
+                <p>No PDF data available.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

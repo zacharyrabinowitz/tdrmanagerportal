@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Point of Sale</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .tabs {
+            display: flex;
+            cursor: pointer;
+        }
+        .tabs div {
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin-right: 2px;
+        }
+        .tabs .active {
+            background-color: #ddd;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Point of Sale</h1>
+        <div class="tabs">
+            <div class="tab active" data-tab="1">New Order</div>
+            <div class="tab" data-tab="2">Manage Orders</div>
+        </div>
+        <div class="tab-content active" id="tab-1">
+            <h2>Create New Order</h2>
+            <form method="POST" action="/new_order">
+                <div class="form-group">
+                    <label for="member_id">Select Member:</label>
+                    <select class="form-control" id="member_id" name="member_id" required>
+                        {% for member in members %}
+                        <option value="{{ member.id }}">{{ member.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Create Order</button>
+            </form>
+        </div>
+        <div class="tab-content" id="tab-2">
+            <h2>Manage Orders</h2>
+            <div id="orders">
+                <!-- Orders will be loaded here via JavaScript -->
+            </div>
+        </div>
+        <div id="products" class="mt-5">
+            <h2>Products</h2>
+            <div class="row">
+                {% for product in products %}
+                <div class="col-md-3 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.name }}</h5>
+                            <p class="card-text">${{ product.price }}</p>
+                            <form method="POST" action="/add_to_order/{{ order_id }}">
+                                <input type="hidden" name="product_id" value="{{ product.id }}">
+                                <div class="form-group">
+                                    <label for="quantity">Quantity:</label>
+                                    <input type="number" class="form-control" name="quantity" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Add to Order</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function () {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(tc => tc.classList.remove('active'));
+                    this.classList.add('active');
+                    document.getElementById('tab-' + this.getAttribute('data-tab')).classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

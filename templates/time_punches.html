@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Time Punches</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Time Punches</h2>
+        <a href="{{ url_for('add_time_punch') }}" class="btn btn-primary mb-3"><i class="fas fa-clock"></i> Add Time Punch</a>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Employee</th>
+                    <th>Clock In</th>
+                    <th>Clock Out</th>
+                    <th>Role</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for punch in punches %}
+                <tr>
+                    <td>{{ punch.id }}</td>
+                    <td>{{ punch.employee.name }}</td>
+                    <td>{{ punch.clock_in }}</td>
+                    <td>{{ punch.clock_out }}</td>
+                    <td>{{ punch.role }}</td>
+                    <td>
+                        <a href="{{ url_for('edit_time_punch', id=punch.id) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</a>
+                        <form action="{{ url_for('delete_time_punch', id=punch.id) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

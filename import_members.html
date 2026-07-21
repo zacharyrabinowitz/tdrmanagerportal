@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Import Members</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Import Members</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            background-color: #f7f9fc;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .navbar-custom {
+            background-color: #343a40;
+            padding: 10px 0;
+        }
+        .navbar-custom .navbar-brand, .navbar-custom .navbar-nav .nav-link {
+            color: #ffffff;
+        }
+        .container {
+            padding-top: 10px;
+        }
+        .form-box {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        .form-box h2 {
+            color: #343a40;
+        }
+        .btn-custom {
+            background-color: #17a2b8;
+            color: white;
+        }
+        .btn-custom:hover {
+            background-color: #138496;
+        }
+        .form-control:focus {
+            box-shadow: 0 0 5px rgba(23, 162, 184, 0.5);
+            border-color: #17a2b8;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            background-color: #343a40;
+            color: white;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container">
+            <a class="navbar-brand" href="#"><i class="fas fa-users"></i> The Draft Room Manager Portal: Member Management</a>
+            <div class="navbar-nav ml-auto">
+                <a class="btn btn-danger nav-link" href="/logout" role="button"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                <a href="/user-links" class="btn btn-primary nav-link"><i class="fas fa-home"></i> Back to Home</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="form-box">
+            <h2><i class="fas fa-file-import"></i> Import Members</h2>
+            <form action="{{ url_for('import_members') }}" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="file">Select CSV file:</label>
+                    <input type="file" class="form-control-file" name="file" id="file" required>
+                </div>
+                <button type="submit" class="btn btn-custom"><i class="fas fa-file-import"></i> Import</button>
+            </form>
+            <a href="{{ url_for('show_members_page') }}" class="btn btn-primary mt-3"><i class="fas fa-arrow-left"></i> Back to Members</a>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2024 The Draft Room. All rights reserved.</p>
+        <p> Developed by &copy;Rabinowitz Capital</p>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
